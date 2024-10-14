@@ -1,0 +1,91 @@
+SD(Program → Block #) = {const, var, procedure, id, call, begin, if, while, #}
+
+SD(Block → ConstDecl VarDecl ProcDecl Statement) = {const, var, procedure, id, call, begin, if, while, #, ;}
+
+SD(ConstDecl → const ConstAssignList ;) = {const}
+
+SD(ConstDecl → λ) = {var, procedure, id, call, begin, if, while, #, ;}
+
+SD(ConstAssignList → id = num ConstAssignList') = {id}
+
+SD(ConstAssignList' → , id = num ConstAssignList') = {,}
+
+SD(ConstAssignList' → λ) = {;}
+
+SD(VarDecl → var IdList ;) = {var}
+
+SD(VarDecl → λ) = {procedure, id, call, begin, if, while, #, ;}
+
+SD(IdList → id IdList') = {id}
+
+SD(IdList' → , id IdList') = {,}
+
+SD(IdList' → λ) = {;}
+
+SD(ProcDecl → ProcDecl') = {procedure, id, call, begin, if, while, #, ;}
+
+SD(ProcDecl' → procedure id ; Block ; ProcDecl') = {procedure}
+
+SD(ProcDecl' → λ) = {id, call, begin, if, while, #, ;, end}
+
+SD(Statement → id := Espression) = {id}
+
+SD(Statement → call id) = {call}
+
+SD(Statement → begin StatementList end) = {begin}
+
+SD(Statement → if Condition then Statement) = {if}
+
+SD(Statement → while Condition do Statement) = {while}
+
+SD(Statement → λ) = {#, ;, end}
+
+SD(StatementList → Statement StatementList') = {id, call, begin, if, while, ;, end}
+
+SD(StatementList' → ; Statement StatementList') = {;}
+
+SD(StatementList' → λ) = {end}
+
+SD(Condition → Expression Relation Expression) = {+, -, (, id, num}
+
+SD(Condition → odd Expression) = {odd}
+
+SD(Relation → =) = {=}
+
+SD(Relation → <>) = {<>}
+
+SD(Relation → <) = {<}
+
+SD(Relation → >) = {>}
+
+SD(Relation → <=) = {<=}
+
+SD(Relation → >=) = {>=}
+
+SD(Expression → SumOperator Term Expression') = {+, -}
+
+SD(Expression → Term Expression') = {(, id, num}
+
+SD(Expression' → SumOperator Term Expression') = {+, -}
+
+SD(Expression' → λ) = {), =, <>, <, > <=, >=, then, do, #, ;, end}
+
+SD(SumOperator → +) = {+}
+
+SD(SumOperator → -) = {-}
+
+SD(Term → Factor Term') = {(, id, num}
+
+SD(Term' → MultOperator Factor Term') = {*, /}
+
+SD(Term' → λ) = {(, id, num, end, +, -, ), =, <>, <, > <=, >=, then, do, #, ;}
+
+SD(MultOperator → *) = {*}
+
+SD(MultOperator → /) = {/}
+
+SD(Factor → ( Expression )) = {(}
+
+SD(Factor → id) = {id}
+
+SD(Factor → num) = {num}
